@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block BaseBread %}
+    <div id="breadcrumbs" class="breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home home-icon"></i> <a href="{% url 'poll_index' %}">民主测试系统</a></li>
+            <li>民主打分</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block BaseBody %}
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>职工姓名</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for staff in staffs %}
+                    <tr>
+                        <td>{{ staff.name }}</td>
+                        <td>
+                            {% comment %}<label>
+                                <select name="evaluation">
+                                    {% for eva in evaluations %}
+                                        <option value="{{ eva.id }}">{{ eva.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>{% endcomment %}
+                            {% if staff.lst_record %}
+                                已打分
+                            {% else %}
+                                <a href="{% url 'poll_evaluation' %}?staff={{ staff.id }}">打分</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

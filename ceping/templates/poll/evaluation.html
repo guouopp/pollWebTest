@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block BaseBread %}
+    <div id="breadcrumbs" class="breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home home-icon"></i> <a href="{% url 'poll_index' %}">民主测试系统</a></li>
+            <li>民主打分</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block BaseBody %}
+    {% if msg %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2 style="text-align: center;">{{ msg }} <a href="{% url 'poll_staff' %}">返回</a></h2>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>职工{{ staff.name }}的{{ evaluation.name }}</h2>
+            </div>
+        </div>
+        <hr>
+        <form action="{% url 'poll_evaluation' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="evaluation_id" value="{{ evaluation.id }}">
+            <input type="hidden" name="staff_id" value="{{ staff.id }}">
+            {% for item in evaluationItems %}
+                <div class="row">
+                    <div class="col-md-12"><h5>{{ forloop.counter }}、{{ item.items.name }}</h5></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="1">1</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="2">2</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="3">3</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="4">4</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="5">5</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="6">6</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="7">7</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="8">8</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}"
+                                                            value="9">9</label></div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="checkbox"><label><input type="radio" name="evalue_{{ item.items.id }}" value="10">10</label>
+                        </div>
+                    </div>
+                </div>
+                {% if not forloop.last %}
+                    <hr style="margin:5px 0;">
+                {% endif %}
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </form>
+
+    {% endif %}
+
+{% endblock %}

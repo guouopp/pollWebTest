@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>民主测评系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/ace-fonts.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/ace.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <!--[if lte IE 9]>
+			<link rel="stylesheet" href="{{ STATIC_URL }}css/ace-part2.css" class="ace-main-stylesheet" />
+		<![endif]-->
+    <!--[if lte IE 9]>
+		  <link rel="stylesheet" href="{{ STATIC_URL }}css/ace-ie.css" />
+		<![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="{{ STATIC_URL }}js/ace-extra.js"></script>
+    <!--[if lte IE 8]>
+		<script src="{{ STATIC_URL }}js/html5shiv.js"></script>
+		<script src="{{ STATIC_URL }}js/respond.js"></script>
+		<![endif]-->
+</head>
+
+<body {% block RootBodyClass %}class="no-skin"{% endblock %}>
+    {% block RootBody %}
+    {% endblock %}
+
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='{{ STATIC_URL }}js/jquery.js'>" + "<" + "/script>");
+    </script>
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='{{ STATIC_URL }}js/jquery1x.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='{{ STATIC_URL }}js/jquery.mobile.custom.js'>" + "<" + "/script>");
+    </script>
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+    <!-- ace scripts -->
+    <script src="{{ STATIC_URL }}js/ace/elements.scroller.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.colorpicker.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.fileinput.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.typeahead.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.wysiwyg.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.spinner.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.treeview.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.wizard.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/elements.aside.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.ajax-content.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.touch-drag.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.sidebar.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.sidebar-scroll-1.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.submenu-hover.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.widget-box.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.settings.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.settings-rtl.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.settings-skin.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.widget-on-reload.js"></script>
+    <script src="{{ STATIC_URL }}js/ace/ace.searchbox-autocomplete.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+    {% block RootJsBlock %}
+    {% endblock %}
+</body>
+</html>

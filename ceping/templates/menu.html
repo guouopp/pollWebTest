@@ -1,0 +1,50 @@
+<div id="sidebar" class="sidebar responsive">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('sidebar', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="nav nav-list">
+        {% url 'poll_best' as pool_best %}
+        <li {% if request.path_info == pool_best%}class="active highlight"{% endif %}>
+            <a href="{% url 'poll_best' %}">
+                <i class="menu-icon fa fa-bar-chart-o"></i>
+                <span class="menu-text">优秀员工投票</span>
+            </a>
+            <b class="arrow"></b>
+        </li>
+
+        {% url 'poll_staff' as poll_staff %}
+        {% url 'poll_evaluation' as poll_evaluation %}
+        <li {% if request.path_info == poll_staff or request.path_info == poll_evaluation%}class="active highlight"{% endif %}>
+            <a href="{% url 'poll_staff' %}">
+                <i class="menu-icon fa fa-pencil-square-o"></i>
+                <span class="menu-text">民主打分</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+        </li>
+
+        {% url 'os_index' as os_index %}
+        <li {% if request.path_info == os_index%}class="active highlight"{% endif %}>
+            <a href="{% url 'os_index' %}">
+                <i class="menu-icon fa fa-book"></i>
+                <span class="menu-text">领取办公用品</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+        </li>
+    </ul>
+    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"
+           data-icon2="ace-icon fa fa-angle-double-right"></i>
+    </div>
+    <script type="text/javascript">
+        try {
+            ace.settings.check('sidebar', 'collapsed');
+        } catch (e) {
+        }
+    </script>
+</div>

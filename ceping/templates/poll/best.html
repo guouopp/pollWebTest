@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block BaseBread %}
+    <div id="breadcrumbs" class="breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home home-icon"></i> <a href="{% url 'poll_index' %}">民主测试系统</a></li>
+            <li>优秀员工投票</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block BaseBody %}
+    {% if msg %}
+        <h2 style="text-align: center">
+            {{ msg }}
+        </h2>
+    {% else %}
+        {% if login_staff.had_poll %}
+            <h2 style="text-align: center">
+                您已经投过票,请勿重复投票!
+            </h2>
+        {% else %}
+            <form action="{% url 'poll_best' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    {% for staff in  staffs %}
+                        <div class="col-md-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="checkedId" value="{{ staff.pk }}"> {{ staff.name }}
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" type="submit">提交</button>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block BaseJsBlock %}
+    {% if not msg %}
+        <script type="text/javascript">
+            $(function () {
+                $("input[name='checkedId']").click(function () {
+                    var len = $("input[name='checkedId']:checked").length;
+                    if (len > 4) {
+                        alert("最多只能选择四名员工");
+                        return false;
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}

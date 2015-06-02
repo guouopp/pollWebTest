@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block BaseBread %}
+    <div id="breadcrumbs" class="breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home home-icon"></i> <a href="{% url 'poll_index' %}">民主测试系统</a></li>
+            <li>领取办公用品</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block BaseBody %}
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th width="40">#</th>
+            <th>办公用品名称</th>
+            <th>库存</th>
+            <th width="260">领取数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for material in materials %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ material.name }}</td>
+                <td>{{ material.stock }}</td>
+                <td>
+                    {% if material.stock > 0 %}
+                        <input readonly type="text" name="spinner_{{ material.id }}" id="spinner_{{ material.id }}"
+                               data-max="{{ material.stock }}" data-min="1"/>
+                        <button type="button" class="btn btn-sm btn-success" id="sign_{{ material.id }}"
+                                data-mid="{{ material.id }}" style="line-height: 14px;">领取
+                        </button>
+                    {% else %}
+                        没有库存,不能领取!
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="dialog-confirm" class="hide">
+        <p class="bigger-110 bolder center grey">
+            <i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+            您确定要领取此办公用品吗?
+        </p>
+    </div>
+{% endblock %}
+
+{% block BaseJsBlock %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.css"/>
+    <script src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.ui.touch-punch.js"></script>
+    <script src="{{ STATIC_URL }}js/fuelux/fuelux.spinner.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("input[id^='spinner_']").each(function (i, input) {
+                $(input).ace_spinner({
+                    min: parseInt($(input).attr("data-min")),
+                    max: parseInt($(input).attr("data-max")),
+                    step: 1,
+                    icon_up: 'fa fa-plus',
+                    icon_down: 'fa fa-minus',
+                    btn_up_class: 'btn-primary',
+                    btn_down_class: 'btn-info',
+                    on_sides: true,
+                    value: 1
+                });
+            });
+            $("button[id^='sign_']").each(function (i, btn) {
+                $(btn).click(function () {
+                    var mid = $(this).attr("data-mid");
+                    $("#dialog-confirm").removeClass('hide').dialog({
+                        resizable: false,
+                        modal: true,
+                        title: "请确认",
+                        buttons: [
+                            {
+                                text: "确定",
+                                "class": "btn btn-info btn-xs",
+                                click: function () {
+                                    $.post(
+                                            "{% url 'os_sign' %}", {material_id: mid, num: $("#spinner_" + mid).val() },
+                                            function (data) {
+                                                if (data == "ok") {
+                                                    alert("领取成功!");
+                                                    window.location.reload();
+                                                } else {
+                                                    alert("领取失败!");
+                                                }
+                                            }
+                                    );
+                                    $(this).dialog("close");
+                                }
+                            }
+                            ,
+                            {
+                                text: "取消",
+                                "class": "btn btn-default btn-xs",
+                                click: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        ]
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
